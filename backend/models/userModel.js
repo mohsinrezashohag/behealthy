@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcrypt');
+
 
 const userSchema = mongoose.Schema({
     name: {
@@ -14,27 +16,27 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        validate: {
-            validator: (value) => {
-                validator.isStrongPassword(value, {
-                    minLength: 8,
-                    minLowercase: 1,
-                    minUppercase: 1,
-                    minNumbers: 1
-                })
-            },
-            messages: 'password  is not strong enough'
-        }
+        // validate: {
+        //     validator: (value) => {
+        //         validator.isStrongPassword(value, {
+        //             minLength: 8,
+        //             minLowercase: 1,
+        //             minUppercase: 1,
+        //             minNumbers: 1
+        //         })
+        //     },
+        //     messages: 'password  is not strong enough'
+        // }
     },
     confirmPassword: {
         type: String,
         required: true,
-        validate: {
-            validator: function (value) {
-                return value = this.password
-            },
-            messages: 'password is not matched'
-        }
+        // validate: {
+        //     validator: function (value) {
+        //         return value = this.password
+        //     },
+        //     messages: 'password is not matched'
+        // }
     }
 
 }, {
@@ -42,12 +44,13 @@ const userSchema = mongoose.Schema({
 })
 
 
-const bcrypt = require('bcrypt');
 userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
     this.confirmPassword = undefined;
     next();
 })
+
+
 
 const userMOdel = mongoose.model('Users', userSchema)
 module.exports = userMOdel

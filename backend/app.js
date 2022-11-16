@@ -8,9 +8,9 @@ app.use(cors());
 app.use(express.json());
 
 
-// app.get('/', (req, res) => {
-//     console.log("Working Fine");
-// })
+app.get('/', (req, res) => {
+    res.send("Working Fine")
+})
 
 const userRoutes = require('./routes/user.routes')
 app.use('/api/v1/user', userRoutes)

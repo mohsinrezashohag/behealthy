@@ -1,15 +1,29 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-import { Link } from 'react-router-dom'
-
-
+import { Button, Form, Input } from 'antd';
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Register = () => {
 
-
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const navigate = useNavigate();
+    const onFinish = async (values) => {
+        try {
+            const res = await axios.post('/api/v1/user/register', values);
+            if (res.data.success) {
+                toast.success(res.data.message);
+                navigate('/login')
+                toast.success("Redirecting to login");
+            }
+            else if (!res.data.success) {
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
+
+
 
     return (
         <div className="authentication">
@@ -28,11 +42,11 @@ const Register = () => {
 
 
                     <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your password!' }]} >
-                        <Input />
+                        <Input type="password"></Input>
                     </Form.Item>
 
-                    <Form.Item label="Confirm Password" name="confirmPassword" rules={[{ required: true, message: 'Please confirm your password!' }]} >
-                        <Input />
+                    <Form.Item label="Confirm Password" name="confirmPassword" type="password" rules={[{ required: true, message: 'Please confirm your password!' }]} >
+                        <Input type="password"></Input>
                     </Form.Item>
 
                     <Button className="primary-button" htmlType="submit">REGISTER</Button>

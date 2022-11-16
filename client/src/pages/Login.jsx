@@ -1,14 +1,29 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 
 
 const Login = () => {
 
-
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const navigate = useNavigate()
+    const onFinish = async (values) => {
+        try {
+            const res = await axios.post('/api/v1/user/login', values);
+            if (res.data.success) {
+                toast.success(res.data.message);
+                localStorage.setItem("token", res.data.token);
+                toast.success("Redirecting to home page");
+                navigate('/')
+            }
+            else if (!res.data.success) {
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
 
     return (
