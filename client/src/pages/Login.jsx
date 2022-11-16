@@ -14,7 +14,8 @@ const Login = () => {
             const res = await axios.post('/api/v1/user/login', values);
             if (res.data.success) {
                 toast.success(res.data.message);
-                localStorage.setItem("token", res.data.token);
+                console.log(res.data.data.token);
+                localStorage.setItem("token", res.data.data.token);
                 toast.success("Redirecting to home page");
                 navigate('/')
             }
@@ -22,7 +23,8 @@ const Login = () => {
                 toast.error(res.data.message);
             }
         } catch (error) {
-            toast.error(error.message);
+            console.log(error);
+            toast.error("Something went wrong");
         }
     };
 

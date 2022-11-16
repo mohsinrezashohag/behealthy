@@ -4,6 +4,7 @@ const userControllers = require('../controllers/user.controller');
 
 router.route('/register')
     .post(userControllers.registerUser)
-
+router.route('/login')
+    .post(userControllers.loginUser)
 
 module.exports = router;

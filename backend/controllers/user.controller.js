@@ -1,5 +1,6 @@
 const { registerUserService, checkUserExists } = require("../services/user.service");
 const bcrypt = require('bcrypt');
+const { generateToken } = require('../utils/generateToken')
 
 
 module.exports.registerUser = async (req, res, next) => {
@@ -56,7 +57,7 @@ module.exports.loginUser = async (req, res) => {
             })
         }
 
-        const comparePasswords = await bcrypt.compare(userData.password === userData.password)
+        const comparePasswords = await bcrypt.compare(userData.password, user.password)
         if (!comparePasswords) {
             return res.status(200).send({
                 success: false,
@@ -65,12 +66,14 @@ module.exports.loginUser = async (req, res) => {
         }
 
 
-        const token = generateToken();
+        const userId = user._id
+        const token = generateToken({ userId });
+        const { password, ...userInfo } = user.toObject();
 
         res.status(200).send({
             success: true,
-            data: user,
-            token: token
+            message: "User logged in successfully",
+            data: { userInfo, token }
         })
 
 
@@ -78,3 +81,7 @@ module.exports.loginUser = async (req, res) => {
 
     }
 }
+
+module.exports.getCurrentUserById = async (req, res) => {
+
+} 
