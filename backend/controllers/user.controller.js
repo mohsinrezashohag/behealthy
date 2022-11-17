@@ -1,4 +1,4 @@
-const { registerUserService, checkUserExists } = require("../services/user.service");
+const { registerUserService, checkUserExists, getUserById } = require("../services/user.service");
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/generateToken')
 
@@ -66,8 +66,8 @@ module.exports.loginUser = async (req, res) => {
         }
 
 
-        const userId = user._id
-        const token = generateToken({ userId });
+        const id = user._id
+        const token = generateToken({ id: id });
         const { password, ...userInfo } = user.toObject();
 
         res.status(200).send({
@@ -78,10 +78,37 @@ module.exports.loginUser = async (req, res) => {
 
 
     } catch (error) {
-
+        res.status(401).send({
+            success: false,
+            message: "Something is wrong with your account",
+        })
     }
 }
 
 module.exports.getCurrentUserById = async (req, res) => {
-
+    try {
+        const user = await getUserById(req.body.userId)
+        console.log(req.body.userId);
+        console.log(user);
+        if (!user) {
+            return res.status(200).send({
+                success: false,
+                message: 'User Does Not Exist'
+            })
+        }
+        else {
+            return res.status(200).send({
+                success: true,
+                data: {
+                    name: user.name,
+                    email: user.email
+                }
+            })
+        }
+    } catch (error) {
+        return res.status(401).send({
+            success: false,
+            message: 'Error getting user info'
+        })
+    }
 } 
