@@ -5,6 +5,8 @@ import Register from '../pages/Register'
 import { Toaster } from 'react-hot-toast'
 import Home from '../pages/Home';
 import { useDispatch, useSelector } from 'react-redux';
+import PrivateRoutes from './PrivateRoutes'
+import PublicRoutes from './PublicRoutes'
 
 
 const Index = () => {
@@ -26,9 +28,12 @@ const Index = () => {
                     reverseOrder={false}
                 />
                 <Routes>
-                    <Route path="/" element={<Home></Home>}></Route>
-                    <Route path="/login" element={<Login></Login>}></Route>
-                    <Route path="/register" element={<Register></Register>}></Route>
+                    <Route path="/" element={<PrivateRoutes><Home></Home></PrivateRoutes>}></Route>
+                    <Route path="/home" element={<PrivateRoutes><Home></Home></PrivateRoutes>} ></Route>
+
+
+                    <Route path="/login" element={<PublicRoutes><Login></Login></PublicRoutes>}></Route>
+                    <Route path="/register" element={<PublicRoutes><Register></Register></PublicRoutes>}></Route>
                 </Routes>
 
             </BrowserRouter >
