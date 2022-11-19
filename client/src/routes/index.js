@@ -4,12 +4,22 @@ import Login from '../pages/Login'
 import Register from '../pages/Register'
 import { Toaster } from 'react-hot-toast'
 import Home from '../pages/Home';
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const index = () => {
+const Index = () => {
+
+    const { loading } = useSelector(state => state.alerts)
+    const dispatch = useDispatch();
+
     return (
         <div>
-            <BrowserRouter>
+            <BrowserRouter  >
+
+                {loading && <div className="spinner-parent">
+                    <div className="spinner-border" role="status">
+                    </div>
+                </div>}
 
                 <Toaster
                     position="top-center"
@@ -21,10 +31,9 @@ const index = () => {
                     <Route path="/register" element={<Register></Register>}></Route>
                 </Routes>
 
-            </BrowserRouter>
-
+            </BrowserRouter >
         </div>
     );
 };
 
-export default index;
+export default Index;

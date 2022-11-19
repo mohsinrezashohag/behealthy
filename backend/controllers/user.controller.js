@@ -53,7 +53,7 @@ module.exports.loginUser = async (req, res) => {
         if (!user) {
             return res.status(200).send({
                 success: false,
-                message: "You dis not register yet"
+                message: "You did not register yet"
             })
         }
 
@@ -61,7 +61,7 @@ module.exports.loginUser = async (req, res) => {
         if (!comparePasswords) {
             return res.status(200).send({
                 success: false,
-                message: 'Wrong Password'
+                message: 'Wrong Credentials'
             })
         }
 
@@ -88,8 +88,8 @@ module.exports.loginUser = async (req, res) => {
 module.exports.getCurrentUserById = async (req, res) => {
     try {
         const user = await getUserById(req.body.userId)
-        console.log(req.body.userId);
-        console.log(user);
+        console.log("id : ", req.body.userId);
+        console.log("current user : ", user);
         if (!user) {
             return res.status(200).send({
                 success: false,

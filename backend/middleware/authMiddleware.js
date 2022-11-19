@@ -14,8 +14,8 @@ module.exports = (req, res, next) => {
 
             else {
 
-                // console.log(decoded);
-                req.body.userId = decoded.userId;
+                console.log(decoded);
+                req.body.userId = decoded.id;
                 next();
             }
         })

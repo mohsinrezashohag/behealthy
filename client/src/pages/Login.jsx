@@ -3,15 +3,26 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideLoading, showLoading } from '../redux/alertReducer';
 
 
 
 const Login = () => {
 
+
+    const { loading } = useSelector(state => state.alerts)
+    const dispatch = useDispatch();
+
+    console.log(loading);
+
+
     const navigate = useNavigate()
     const onFinish = async (values) => {
         try {
+            dispatch(showLoading())
             const res = await axios.post('/api/v1/user/login', values);
+            dispatch(hideLoading())
             if (res.data.success) {
                 toast.success(res.data.message);
                 console.log(res.data.data.token);
@@ -23,6 +34,7 @@ const Login = () => {
                 toast.error(res.data.message);
             }
         } catch (error) {
+            dispatch(hideLoading())
             console.log(error);
             toast.error("Something went wrong");
         }
@@ -37,11 +49,11 @@ const Login = () => {
 
 
                     <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
-                        <Input />
+                        <Input type="email" />
                     </Form.Item>
 
                     <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your password!' }]} >
-                        <Input />
+                        <Input type="password" />
                     </Form.Item>
 
                     <Button className="primary-button" htmlType="submit">LOGIN</Button>

@@ -3,13 +3,21 @@ import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { hideLoading, showLoading } from '../redux/alertReducer';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Register = () => {
+
+    const { loading } = useSelector(state => state.alerts)
+    const dispatch = useDispatch();
+
 
     const navigate = useNavigate();
     const onFinish = async (values) => {
         try {
+            dispatch(showLoading())
             const res = await axios.post('/api/v1/user/register', values);
+            dispatch(hideLoading())
             if (res.data.success) {
                 toast.success(res.data.message);
                 navigate('/login')
@@ -19,6 +27,7 @@ const Register = () => {
                 toast.error(res.data.message);
             }
         } catch (error) {
+            dispatch(hideLoading())
             toast.error(error.message);
         }
     };

@@ -50,6 +50,26 @@ label {
   box-shadow: 0 0 2px gray;
 }
 
+.spinner-parent {
+  background-color: rgba(0, 0, 0, 0.408);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 99999999;
+}
+
+.spinner-border {
+  width: 5rem;
+  height: 5rem;
+  color: white;
+}
+
+
 .card-title {
   text-align: left;
   font-size: 1.5rem;

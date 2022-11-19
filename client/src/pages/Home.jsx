@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const Home = () => {
 
+
     const getData = async () => {
         try {
             const res = await axios.post('/api/v1/user/get-user-by-id', {}, {
@@ -10,19 +11,14 @@ const Home = () => {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 }
             });
-            console.log(res);
+            console.log("form home : ", res);
         } catch (error) {
             console.log(error);
         }
     }
-
-
     useEffect(() => { }, [
         getData()
     ])
-
-
-
 
     return (
         <div>
