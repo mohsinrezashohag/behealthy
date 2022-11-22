@@ -96,13 +96,13 @@ module.exports.getCurrentUserById = async (req, res) => {
                 message: 'User Does Not Exist'
             })
         }
+
+
         else {
+            const {password,...userInfos} =user.toObject();
             return res.status(200).send({
                 success: true,
-                data: {
-                    name: user.name,
-                    email: user.email
-                }
+                data: userInfos
             })
         }
     } catch (error) {

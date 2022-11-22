@@ -1,10 +1,12 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import alertReducer from "./alertReducer"
+import userReducer from "./userReducer"
 
 
 const store = configureStore({
     reducer: {
-        alerts: alertReducer
+        alerts: alertReducer,
+        user: userReducer
     }
 })
 

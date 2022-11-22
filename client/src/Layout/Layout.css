@@ -1,0 +1,136 @@
+.main {
+    padding: 20px;
+}
+
+.sidebar {
+    background-color: #005555;
+    border-radius: 5px;
+    box-shadow: 0 0 3px gray;
+    margin-right: 20px;
+    height: 95vh;
+    width: 250px;
+}
+
+.collapsed-sidebar {
+    background-color: #005555;
+    border-radius: 5px;
+    box-shadow: 0 0 3px gray;
+    margin-right: 20px;
+    height: 95vh;
+    width: 80px;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 3px gray;
+    margin-bottom: 20px;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-name {
+    font-size: 18px;
+    margin: 0px 20px 0px 3px;
+    text-transform: capitalize;
+    color: #005555;
+    font-weight: bold;
+}
+
+.content {
+    width: 100%;
+}
+
+.body {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 3px gray;
+    height: 82vh;
+
+}
+
+.menu {
+    margin-top: 100px;
+}
+
+.menu-item {
+    margin-top: 30px;
+    margin: 30px 10px 0px 10px;
+}
+
+.menu-item a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+.menu-item i {
+    color: rgba(255, 255, 255, 0.699);
+    font-size: 18px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.active-menu-link {
+    background-color: rgba(128, 128, 128, 0.445);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+
+.logo {
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.collapse-action {
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+    margin: 10px;
+}
+
+.header-action-icon {
+    font-size: 18px;
+    color: black;
+    margin: 0px 10px;
+    font-weight: bold;
+
+}
+
+.page-title {
+    font-size: 25px;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+    padding: 7px;
+}
+
+
+
+
+
+
+@media screen and(max-width: 768px) {
+    .collapsed-sidebar {
+        background-color: #005555;
+        border-radius: 5px;
+        box-shadow: 0 0 3px gray;
+        margin-right: 20px;
+        height: 95vh;
+        width: 70px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo {
+        display: none
+    }
+}

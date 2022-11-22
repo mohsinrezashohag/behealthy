@@ -1,29 +1,34 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import Layout from '../Layout/Layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideLoading, showLoading } from '../redux/alertReducer';
+
 
 const Home = () => {
 
-
+    const dispatch = useDispatch()
     const getData = async () => {
         try {
+            dispatch(showLoading())
             const res = await axios.post('/api/v1/user/get-user-by-id', {}, {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 }
             });
-            console.log("form home : ", res);
+            dispatch(hideLoading())
         } catch (error) {
-            console.log(error);
+            dispatch(hideLoading())
         }
     }
-    useEffect(() => { }, [
+    useEffect(() => {
         getData()
-    ])
+    }, []);
 
     return (
-        <div>
-            <h1>Home</h1>
-        </div>
+        <Layout>
+            <h1>Home Page</h1>
+        </Layout>
     );
 };
 
