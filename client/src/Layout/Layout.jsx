@@ -73,8 +73,11 @@ const Layout = ({ children }) => {
                   className={`d-flex menu-item ${isActive && 'active-menu-link'
                     }`}
                 >
-                  <i className={item.icon}></i>
-                  {!collapse && <Link to={item.path}>{item.name}</Link>}
+                  <div>
+                    <i className={item.icon}></i>
+                    {!collapse && <Link to={item.path}>{item.name}</Link>}
+                  </div>
+
                 </div>
               )
             })}
@@ -82,11 +85,11 @@ const Layout = ({ children }) => {
             <div className='d-flex menu-item'>
               <i className='ri-logout-box-line'></i>
 
-              <Link onClick={() => {
+              {!collapse && <Link onClick={() => {
                 localStorage.clear()
                 navigate('/login')
               }}>Logout
-              </Link>
+              </Link>}
 
             </div>
           </div>}
@@ -124,14 +127,6 @@ const Layout = ({ children }) => {
             </div>
 
 
-
-            {/* <div className='user-and-notification d-flex align-items-center justify-content-center'>
-              <i className='ri-notification-line header-action-icon'></i>
-              <div className='d-flex align-items-center justify-content-center'>
-                <i className='ri-user-line header-action-icon'></i>
-                <p>{user?.name}</p>
-              </div>
-            </div> */}
 
 
 

@@ -1,34 +1,31 @@
+const { default: mongoose } = require('mongoose')
 
-const doctorSchema = mongoose.createSchema({
-userId :{
-    type:String,
-    required:true
-},
-firstName :{
-    type:String,
-    required:true
-},
-lastName :{
-    type:String,
-    required:true
-},
-email :{
-    type:String,
-    required:true
-},
-phoneNumber :{
-    type:String,
-    required:true
-},
-website :{
-    type:String,
-    required:true
-},
-address :{
-    type:String,
-    required:true
-},
-specialization: {
+const doctorSchema = mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  website: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  specialization: {
     type: String,
     required: true,
   },
@@ -37,19 +34,23 @@ specialization: {
     required: true,
   },
   feePerConsultation: {
-    type: Number,
+    type: String,
     required: true,
   },
-  timings : {
+  timings: {
     type: Array,
     required: true,
   },
   status: {
     type: String,
-    enum : {
-        values : ['pending','success'],
-        messages : `input should be within the values : ${VALUES}`
-    }
-  }
-
+    enum: {
+      values: ['pending', 'success'],
+      messages: `input should be within the values : {values}`,
+    },
+    default: 'pending',
+  },
 })
+
+const doctorModel = mongoose.model('Doctors', doctorSchema)
+
+module.exports = doctorModel

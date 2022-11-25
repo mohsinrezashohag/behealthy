@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import Layout from '../Layout/Layout';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from '../redux/alertReducer';
+
 
 
 const Home = () => {
@@ -27,7 +28,8 @@ const Home = () => {
 
     return (
         <Layout>
-            <h1>Home Page</h1>
+            <h1 className="page-title">Home Page</h1>
+
         </Layout>
     );
 };

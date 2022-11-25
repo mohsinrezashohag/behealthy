@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+.content-title{
+    font-size: 18px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.436);
+    margin-left: 3px;
+    font-weight: 600;
+}
+
+.ant-form-item-control-input-content{
+    display: flex !important;
+    align-items: left !important;
+}
+
+.ant-picker{
+    border: 2px solid rgba(128, 128, 128, 0.445) !important;
+    font-size: 30px !important;
+}
+.ant-picker-focused{
+    outline: none !important;
+    box-Shadow: none !important;
+    border: 2px solid rgb(128, 128, 128)  !important;
+  }
+  .apply-button{
+    width: 190px;
+  }

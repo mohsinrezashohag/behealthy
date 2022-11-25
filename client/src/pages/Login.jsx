@@ -14,7 +14,6 @@ const Login = () => {
     const { loading } = useSelector(state => state.alerts)
     const dispatch = useDispatch();
 
-    console.log(loading);
 
 
     const navigate = useNavigate()

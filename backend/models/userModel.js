@@ -46,11 +46,11 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    seenNotification: {
+    seenNotifications: {
       type: Array,
       default: [],
     },
-    unseenNotification: {
+    unseenNotifications: {
       type: Array,
       default: [],
     },
