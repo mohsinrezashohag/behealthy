@@ -2,25 +2,34 @@ import React from 'react'
 import Layout from '../Layout/Layout'
 import { Button, Col, Form, Input, Row, TimePicker } from 'antd'
 import './pages.css'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { hideLoading, showLoading } from '../redux/alertReducer'
+import { useNavigate } from 'react-router-dom'
 
 const ApplyDoctor = () => {
+  const navigate = useNavigate()
   const { user } = useSelector((state) => state.user)
+  // const { loading } = useSelector((state) => state.loading)
+  const dispatch = useDispatch()
 
   const onFinish = async (values) => {
     try {
+      dispatch(showLoading())
       const res = await axios.post('/api/v1/user/apply-doctor-account', {
         userId: user._id,
         ...values,
       })
+      dispatch(hideLoading())
+
       if (res.data.success) {
         toast.success(res.data.message)
+        navigate('/')
       }
     } catch (error) {
-      console.log(error)
-      toast.error(error.message)
+      dispatch(hideLoading())
+      toast.error('Something went wrong ')
     }
   }
 

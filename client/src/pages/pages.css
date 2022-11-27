@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 
-.content-title{
+.content-title {
     font-size: 18px;
     text-align: left;
     color: rgba(0, 0, 0, 0.436);
@@ -9,20 +9,36 @@
     font-weight: 600;
 }
 
-.ant-form-item-control-input-content{
+.ant-form-item-control-input-content {
     display: flex !important;
     align-items: left !important;
 }
 
-.ant-picker{
+.ant-picker {
     border: 2px solid rgba(128, 128, 128, 0.445) !important;
     font-size: 30px !important;
 }
-.ant-picker-focused{
+
+.ant-picker-focused {
     outline: none !important;
     box-Shadow: none !important;
-    border: 2px solid rgb(128, 128, 128)  !important;
-  }
-  .apply-button{
+    border: 2px solid rgb(128, 128, 128) !important;
+}
+
+.apply-button {
     width: 190px;
-  }
+}
+
+.notification-message {
+    text-align: left !important;
+    font-size: 18px !important;
+    padding: 5px !important;
+}
+
+.mark-text {
+    font-size: 18px !important;
+}
+
+.custom-link {
+    cursor: pointer;
+}

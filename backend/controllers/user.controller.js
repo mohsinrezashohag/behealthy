@@ -5,10 +5,10 @@ const {
   checkUserExistsService,
   updateAdminService,
   getAdminService,
+  markAllAsSeenService,
 } = require('../services/user.service')
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generateToken')
-const Users = require('../models/userModel')
 
 module.exports.registerUser = async (req, res, next) => {
   try {
@@ -93,7 +93,6 @@ module.exports.loginUser = async (req, res) => {
 module.exports.getCurrentUserById = async (req, res) => {
   try {
     const user = await getUserByIdService(req.body.userId)
-    console.log('current user : ', user)
     if (!user) {
       return res.status(200).send({
         success: false,
@@ -119,16 +118,14 @@ module.exports.applyDoctorAccount = async (req, res, next) => {
     console.log('hitting here')
     const newDoctor = req.body
     const doctor = await createDoctorService(newDoctor)
-    console.log(doctor)
     const adminUser = await getAdminService()
 
     const unseenNotifications = adminUser.unseenNotifications
 
     unseenNotifications.push({
       type: 'Doctor Account Request',
-      message: `${
-        doctor?.firstName + ' ' + doctor?.lastName
-      } has requested for Doctor Account`,
+      message: `${doctor?.firstName + ' ' + doctor?.lastName
+        } has requested for Doctor Account`,
       data: {
         doctorId: doctor?._id,
         doctorName: doctor?.firstName + ' ' + doctor?.lastName,
@@ -146,6 +143,67 @@ module.exports.applyDoctorAccount = async (req, res, next) => {
     res.status(400).send({
       success: false,
       message: 'Some thing Wrong in backend',
+    })
+  }
+}
+
+
+module.exports.MarkAllAsSeen = async (req, res) => {
+  try {
+
+    console.log("hitting mark all as read");
+    const userId = req.body.userId;
+    const res = await markAllAsSeenService(userId);
+
+    console.log("res:", res);
+    res.status(200).send({
+      success: true,
+      message: "Marked all as seen"
+    })
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Marked all as seen not working"
+    })
+  }
+}
+
+
+
+
+module.exports.MarkAllAsSeen = async (req, res) => {
+  try {
+
+    console.log("hitting mark all as read");
+    const userId = req.body.userId;
+    const res = await markAllAsSeenService(userId);
+
+    console.log("res:", res);
+    res.status(200).send({
+      success: true,
+      message: "Marked all as seen"
+    })
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Marked all as seen not working"
+    })
+  }
+}
+
+
+module.exports.DeleteAllNotification = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const res = await deleteAllNotificationService(userId);
+    res.status(200).send({
+      success: true,
+      message: "Deleted All Notifications"
+    })
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Marked all as seen not working"
     })
   }
 }

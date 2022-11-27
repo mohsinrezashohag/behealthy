@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PrivateRoutes from './PrivateRoutes'
 import PublicRoutes from './PublicRoutes'
 import ApplyDoctor from '../pages/ApplyDoctor';
+import Notifications from '../pages/Notifications'
 
 
 const Index = () => {
@@ -32,6 +33,8 @@ const Index = () => {
                     <Route path="/" element={<PrivateRoutes><Home></Home></PrivateRoutes>}></Route>
                     <Route path="/home" element={<PrivateRoutes><Home></Home></PrivateRoutes>} ></Route>
                     <Route path="/apply-doctor" element={<PrivateRoutes><ApplyDoctor></ApplyDoctor></PrivateRoutes>} ></Route>
+                    <Route path="/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
+
 
                     <Route path="/login" element={<PublicRoutes><Login></Login></PublicRoutes>}></Route>
                     <Route path="/register" element={<PublicRoutes><Register></Register></PublicRoutes>}></Route>

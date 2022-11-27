@@ -1,3 +1,4 @@
+import { Avatar, Badge } from 'antd'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -11,7 +12,6 @@ const Layout = ({ children }) => {
 
   const { loading } = useSelector(state => state.alerts)
   const { user } = useSelector((state) => state.user)
-  console.log(loading);
   const userMenu = [
     {
       name: 'Home',
@@ -54,7 +54,6 @@ const Layout = ({ children }) => {
   ]
 
   const menuItems = user?.isAdmin ? adminMenu : userMenu
-
   return (
     <div className='main'>
       <div className='layout d-flex'>
@@ -63,7 +62,7 @@ const Layout = ({ children }) => {
             <h1 className='logo'>BH</h1>
           </div>
 
-          {!loading && <div className='menu'>
+          <div className='menu'>
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path
 
@@ -92,7 +91,7 @@ const Layout = ({ children }) => {
               </Link>}
 
             </div>
-          </div>}
+          </div>
 
         </div>
 
@@ -113,17 +112,17 @@ const Layout = ({ children }) => {
             </div>
 
             <div className='d-flex align-items-center justify-content-center'>
-              <div>
-                <i className='ri-notification-line header-action-icon'></i>
+              <div className="me-3" onClick={() => navigate('/notifications')}>
+                <Badge count={user?.unseenNotifications.length}>
+                  <i className='ri-notification-line header-action-icon'></i>
+                </Badge>
               </div>
+
               <div className='d-flex align-items-center justify-content-center'>
-
                 <i className='ri-user-line header-action-icon'></i>
-
-
                 <p className='user-name'>{user?.name}</p>
-
               </div>
+
             </div>
 
 

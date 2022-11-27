@@ -11,5 +11,6 @@ router
   .post(authMiddleware, userControllers.getCurrentUserById)
 
 router.route('/apply-doctor-account').post(userControllers.applyDoctorAccount)
+router.route('/mark-all-as-seen').post(userControllers.MarkAllAsSeen)
 
 module.exports = router
