@@ -43,12 +43,12 @@ const Layout = ({ children }) => {
     },
     {
       name: 'Users',
-      path: '/users',
+      path: '/admin/users',
       icon: 'ri-file-list-line',
     },
     {
       name: 'Doctors',
-      path: '/doctors',
+      path: '/admin/doctors',
       icon: 'ri-hospital-line',
     },
   ]
@@ -112,7 +112,7 @@ const Layout = ({ children }) => {
             </div>
 
             <div className='d-flex align-items-center justify-content-center'>
-              <div className="me-3" onClick={() => navigate('/notifications')}>
+              <div className="me-3" onClick={() => navigate('/admin/notifications')}>
                 <Badge count={user?.unseenNotifications.length}>
                   <i className='ri-notification-line header-action-icon'></i>
                 </Badge>

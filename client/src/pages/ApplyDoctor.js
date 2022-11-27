@@ -20,6 +20,10 @@ const ApplyDoctor = () => {
       const res = await axios.post('/api/v1/user/apply-doctor-account', {
         userId: user._id,
         ...values,
+      }, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
       })
       dispatch(hideLoading())
 

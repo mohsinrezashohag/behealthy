@@ -48,3 +48,10 @@ module.exports.markAllAsSeenService = async (userId) => {
   return updatedUser;
 
 }
+
+module.exports.deleteAllNotificationService = async (userId) => {
+  const user = await Users.findOne({ _id: userId })
+  user.seenNotifications = [];
+  const updatedUser = await Users.findByIdAndUpdate(user._id, user)
+  return updatedUser
+}

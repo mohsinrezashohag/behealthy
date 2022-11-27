@@ -26,7 +26,6 @@ const Login = () => {
                 toast.success(res.data.message);
                 console.log(res.data.data.token);
                 localStorage.setItem("token", res.data.data.token);
-                toast.success("Redirecting to home page");
                 navigate('/')
             }
             else if (!res.data.success) {

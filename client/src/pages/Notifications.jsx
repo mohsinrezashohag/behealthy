@@ -1,20 +1,53 @@
 import { Tabs } from 'antd';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../Layout/Layout';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { hideLoading, showLoading } from '../redux/alertReducer';
+import { useNavigate } from 'react-router-dom';
+
 
 const Notifications = () => {
     const { user } = useSelector(state => state.user)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const markAllAsSeen = async () => {
         try {
-            const res = await axios.post('/api/v1/user/mark-all-as-seen', { userId: user?._id })
+            dispatch(showLoading())
+            const res = await axios.post('/api/v1/user/mark-all-as-seen', { userId: user?._id }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
             if (res.data.data) {
+                dispatch(hideLoading())
+                toast.success(res.data.message);
+                navigate('/')
+
+            }
+        } catch (error) {
+            dispatch(hideLoading())
+            toast.error(error.message);
+        }
+    }
+
+    const deleteAllNotifications = async () => {
+        try {
+            dispatch(showLoading())
+            const res = await axios.post('/api/v1/user/delete-all-notifications', { userId: user?._id }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            })
+            if (res.data.data) {
+                dispatch(hideLoading())
                 toast.success(res.data.message);
             }
         } catch (error) {
-            console.log(error);
+            dispatch(hideLoading())
+            toast.error(error.message);
+
         }
     }
 
@@ -44,7 +77,7 @@ const Notifications = () => {
                                     {notification.message}
                                 </p>)}
                             </div>
-                            <h6>Delete All</h6>
+                            <h6 className='custom-link' onClick={() => deleteAllNotifications()}>Delete All</h6>
                         </div>
 
                     </Tabs.TabPane>

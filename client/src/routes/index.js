@@ -9,6 +9,8 @@ import PrivateRoutes from './PrivateRoutes'
 import PublicRoutes from './PublicRoutes'
 import ApplyDoctor from '../pages/ApplyDoctor';
 import Notifications from '../pages/Notifications'
+import UserList from '../pages/Admin/UserList';
+import DoctorList from '../pages/Admin/DoctorList';
 
 
 const Index = () => {
@@ -28,12 +30,15 @@ const Index = () => {
                     position="top-center"
                     reverseOrder={false}
                 />
-                
+
                 <Routes>
                     <Route path="/" element={<PrivateRoutes><Home></Home></PrivateRoutes>}></Route>
                     <Route path="/home" element={<PrivateRoutes><Home></Home></PrivateRoutes>} ></Route>
                     <Route path="/apply-doctor" element={<PrivateRoutes><ApplyDoctor></ApplyDoctor></PrivateRoutes>} ></Route>
-                    <Route path="/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
+                    <Route path="/admin/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
+
+                    <Route path="/admin/users" element={<PrivateRoutes><UserList></UserList></PrivateRoutes>} ></Route>
+                    <Route path="/admin/doctors" element={<PrivateRoutes><DoctorList></DoctorList></PrivateRoutes>} ></Route>
 
 
                     <Route path="/login" element={<PublicRoutes><Login></Login></PublicRoutes>}></Route>

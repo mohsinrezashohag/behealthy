@@ -6,6 +6,7 @@ const {
   updateAdminService,
   getAdminService,
   markAllAsSeenService,
+  deleteAllNotificationService,
 } = require('../services/user.service')
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generateToken')
@@ -124,8 +125,7 @@ module.exports.applyDoctorAccount = async (req, res, next) => {
 
     unseenNotifications.push({
       type: 'Doctor Account Request',
-      message: `${doctor?.firstName + ' ' + doctor?.lastName
-        } has requested for Doctor Account`,
+      message: `${doctor?.firstName + ' ' + doctor?.lastName} has requested for Doctor Account`,
       data: {
         doctorId: doctor?._id,
         doctorName: doctor?.firstName + ' ' + doctor?.lastName,
@@ -148,7 +148,7 @@ module.exports.applyDoctorAccount = async (req, res, next) => {
 }
 
 
-module.exports.MarkAllAsSeen = async (req, res) => {
+module.exports.markAllAsSeen = async (req, res) => {
   try {
 
     console.log("hitting mark all as read");
@@ -170,30 +170,9 @@ module.exports.MarkAllAsSeen = async (req, res) => {
 
 
 
-
-module.exports.MarkAllAsSeen = async (req, res) => {
+module.exports.deleteAllNotification = async (req, res) => {
   try {
-
-    console.log("hitting mark all as read");
-    const userId = req.body.userId;
-    const res = await markAllAsSeenService(userId);
-
-    console.log("res:", res);
-    res.status(200).send({
-      success: true,
-      message: "Marked all as seen"
-    })
-  } catch (error) {
-    res.status(400).send({
-      success: false,
-      message: "Marked all as seen not working"
-    })
-  }
-}
-
-
-module.exports.DeleteAllNotification = async (req, res) => {
-  try {
+    console.log("delete hitting");
     const userId = req.body.userId;
     const res = await deleteAllNotificationService(userId);
     res.status(200).send({
@@ -203,7 +182,7 @@ module.exports.DeleteAllNotification = async (req, res) => {
   } catch (error) {
     res.status(400).send({
       success: false,
-      message: "Marked all as seen not working"
+      message: "Failed to delete all notifications"
     })
   }
 }
