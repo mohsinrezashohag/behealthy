@@ -51,6 +51,11 @@ const Layout = ({ children }) => {
       path: '/admin/doctors',
       icon: 'ri-hospital-line',
     },
+    {
+      name: 'Profile',
+      path: '/profile',
+      icon: 'ri-user-line',
+    },
   ]
 
   const menuItems = user?.isAdmin ? adminMenu : userMenu

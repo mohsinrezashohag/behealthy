@@ -49,6 +49,8 @@ const doctorSchema = mongoose.Schema({
     },
     default: 'pending',
   },
+}, {
+  timestamps: true,
 })
 
 const doctorModel = mongoose.model('Doctors', doctorSchema)

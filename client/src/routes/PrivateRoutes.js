@@ -24,7 +24,6 @@ const PrivateRoutes = (props) => {
 
       if (res.data) {
         dispatch(hideLoading())
-        console.log(res.data.data)
         dispatch(setUser(res.data.data))
       } else {
         dispatch(hideLoading())
