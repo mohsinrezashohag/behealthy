@@ -23,7 +23,7 @@ const Notifications = () => {
             if (res.data.data) {
                 dispatch(hideLoading())
                 toast.success(res.data.message);
-                navigate('/')
+                window.location.reload()
 
             }
         } catch (error) {
@@ -43,6 +43,7 @@ const Notifications = () => {
             if (res.data.data) {
                 dispatch(hideLoading())
                 toast.success(res.data.message);
+                window.location.reload();
             }
         } catch (error) {
             dispatch(hideLoading())

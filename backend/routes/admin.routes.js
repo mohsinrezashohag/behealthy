@@ -12,5 +12,8 @@ router.route('/get-all-users')
 router.route('/get-all-doctors')
     .get(authMiddleware, adminController.getAllDoctors)
 
+router.route('/update-doctor-account-status')
+    .post(authMiddleware, adminController.updateDoctorAccountStatus)
+
 
 module.exports = router

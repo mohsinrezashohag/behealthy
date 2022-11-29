@@ -8,23 +8,23 @@ import { hideLoading, showLoading } from '../redux/alertReducer';
 
 const Home = () => {
 
-    const dispatch = useDispatch()
-    const getData = async () => {
-        try {
-            dispatch(showLoading())
-            const res = await axios.post('/api/v1/user/get-user-by-id', {}, {
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('token')
-                }
-            });
-            dispatch(hideLoading())
-        } catch (error) {
-            dispatch(hideLoading())
-        }
-    }
-    useEffect(() => {
-        getData()
-    }, []);
+    // const dispatch = useDispatch()
+    // const getData = async () => {
+    //     try {
+    //         dispatch(showLoading())
+    //         const res = await axios.post('/api/v1/user/get-user-by-id', {}, {
+    //             headers: {
+    //                 Authorization: 'Bearer ' + localStorage.getItem('token')
+    //             }
+    //         });
+    //         dispatch(hideLoading())
+    //     } catch (error) {
+    //         dispatch(hideLoading())
+    //     }
+    // }
+    // useEffect(() => {
+    //     getData()
+    // }, []);
 
     return (
         <Layout>

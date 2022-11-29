@@ -17,7 +17,6 @@ const UserList = () => {
             console.log(res);
             if (res.data.success) {
                 setUsers(res.data.data)
-                toast.success(res.data.message)
             }
 
         } catch (error) {
@@ -30,6 +29,7 @@ const UserList = () => {
         getAllUsers();
     }, [])
 
+    const OnlyUsers = users.filter(user => user.isAdmin !== true)
 
     const columns = [
         {
@@ -65,7 +65,7 @@ const UserList = () => {
 
                     {user.name}
                 </h1>)} */}
-                <Table dataSource={users} columns={columns} />;
+                <Table dataSource={OnlyUsers} columns={columns} />;
 
 
             </div>

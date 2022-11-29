@@ -153,12 +153,12 @@ module.exports.markAllAsSeen = async (req, res) => {
 
     console.log("hitting mark all as read");
     const userId = req.body.userId;
-    const res = await markAllAsSeenService(userId);
+    const updatedUser = await markAllAsSeenService(userId);
 
-    console.log("res:", res);
     res.status(200).send({
       success: true,
-      message: "Marked all as seen"
+      message: "Marked all as seen",
+      data: updatedUser
     })
   } catch (error) {
     res.status(400).send({
@@ -174,10 +174,11 @@ module.exports.deleteAllNotification = async (req, res) => {
   try {
     console.log("delete hitting");
     const userId = req.body.userId;
-    const res = await deleteAllNotificationService(userId);
+    const updatedUser = await deleteAllNotificationService(userId);
     res.status(200).send({
       success: true,
-      message: "Deleted All Notifications"
+      message: "Deleted All Notifications",
+      data: updatedUser
     })
   } catch (error) {
     res.status(400).send({

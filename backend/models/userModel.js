@@ -30,7 +30,7 @@ const userSchema = mongoose.Schema(
     },
     confirmPassword: {
       type: String,
-      required: true,
+      // required: true,
       // validate: {
       //     validator: function (value) {
       //         return value = this.password
