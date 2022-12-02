@@ -24,7 +24,6 @@ const Login = () => {
             dispatch(hideLoading())
             if (res.data.success) {
                 toast.success(res.data.message);
-                console.log(res.data.data.token);
                 localStorage.setItem("token", res.data.data.token);
                 navigate('/')
             }
@@ -33,7 +32,6 @@ const Login = () => {
             }
         } catch (error) {
             dispatch(hideLoading())
-            console.log(error);
             toast.error("Something went wrong");
         }
     };

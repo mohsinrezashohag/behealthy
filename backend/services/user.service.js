@@ -34,14 +34,15 @@ module.exports.markAllAsSeenService = async (userId) => {
   const user = await Users.findOne({ _id: userId })
 
   const unseenNotifications = user.unseenNotifications;
-  const seenNotifications = user.seenNotifications;
+  const oldSeenNotifications = user.seenNotifications;
 
-  seenNotifications.push(...unseenNotifications)
+  oldSeenNotifications.push(...unseenNotifications)
+
 
   user.unseenNotifications = [],
-    user.seenNotifications = seenNotifications;
+    user.seenNotifications = oldSeenNotifications;
 
-  const updatedUser = await user.save()
+  const updatedUser = await Users.findByIdAndUpdate(userId, user)
   return updatedUser;
 
 
@@ -50,6 +51,6 @@ module.exports.markAllAsSeenService = async (userId) => {
 module.exports.deleteAllNotificationService = async (userId) => {
   const user = await Users.findOne({ _id: userId })
   user.seenNotifications = [];
-  const updatedUser = await user.save()
+  const updatedUser = await Users.findByIdAndUpdate(userId, user);
   return updatedUser
 }

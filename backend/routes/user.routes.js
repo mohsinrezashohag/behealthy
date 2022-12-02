@@ -6,8 +6,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 router.route('/register').post(userControllers.registerUser)
 router.route('/login').post(userControllers.loginUser)
 
-router
-  .route('/get-user-by-id')
+router.route('/get-user-by-id')
   .post(authMiddleware, userControllers.getCurrentUserById)
 
 router.route('/apply-doctor-account').post(authMiddleware, userControllers.applyDoctorAccount)

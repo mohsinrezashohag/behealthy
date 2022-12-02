@@ -12,8 +12,10 @@ app.get('/', (req, res) => {
 
 const userRoutes = require('./routes/user.routes')
 const adminRoutes = require('./routes/admin.routes')
+const doctorRoutes = require('./routes/doctor.routes')
 
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/admin', adminRoutes)
+app.use('/api/v1/doctor', doctorRoutes)
 
 module.exports = app

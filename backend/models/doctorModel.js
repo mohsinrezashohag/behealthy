@@ -44,7 +44,7 @@ const doctorSchema = mongoose.Schema({
   status: {
     type: String,
     enum: {
-      values: ['pending', 'success'],
+      values: ['pending', 'approved'],
       messages: `input should be within the values : {values}`,
     },
     default: 'pending',

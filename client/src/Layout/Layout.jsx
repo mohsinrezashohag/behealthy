@@ -12,6 +12,8 @@ const Layout = ({ children }) => {
 
   const { loading } = useSelector(state => state.alerts)
   const { user } = useSelector((state) => state.user)
+
+
   const userMenu = [
     {
       name: 'Home',
@@ -58,13 +60,37 @@ const Layout = ({ children }) => {
     },
   ]
 
-  const menuItems = user?.isAdmin ? adminMenu : userMenu
+
+  const doctorMenu = [
+    {
+      name: 'Home',
+      path: '/',
+      icon: 'ri-home-line',
+    },
+    {
+      name: 'Appointments',
+      path: '/appointments',
+      icon: 'ri-file-list-line',
+    },
+    {
+      name: 'Profile',
+      path: `/doctor/profile/${user?._id}`,
+      icon: 'ri-user-line',
+    },
+  ]
+
+
+  const menuItems = user?.isAdmin ? adminMenu : user?.isDoctor ? doctorMenu : userMenu;
+  const role = user?.isAdmin ? 'Admin' : user?.isDoctor ? 'Doctor' : 'User';
+
+
   return (
     <div className='main'>
       <div className='layout d-flex'>
         <div className={`sidebar ${collapse && 'collapsed-sidebar'}`}>
           <div className='sidebar-header'>
             <h1 className='logo'>BH</h1>
+            <h6 className='text-start text-white ps-1'>{role}</h6>
           </div>
 
           <div className='menu'>

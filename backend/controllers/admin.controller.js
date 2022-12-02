@@ -38,19 +38,22 @@ module.exports.getAllDoctors = async (req, res) => {
 module.exports.updateDoctorAccountStatus = async (req, res) => {
     try {
         const { doctorId, status } = req.body;
+
         const doctor = await Doctors.findByIdAndUpdate(doctorId, {
-            status,
+            status: status,
         });
 
-        const user = await Users.findOne({ _id: doctor.userId });
+        const user = await Users.findOne({ _id: doctor?.userId });
+
+
         const unseenNotifications = user.unseenNotifications;
         unseenNotifications.push({
             type: "new-doctor-request-changed",
             message: `Your doctor account has been ${status}`,
             onClickPath: "/notifications",
         });
-        // user.isDoctor = status === "approved" ? true : false;
-        await user.save();
+        user.isDoctor = status === "approved" ? true : false;
+        await Users.findOneAndUpdate({ _id: doctor?.userId }, user)
 
         res.status(200).send({
             message: "Doctor status updated successfully",
@@ -58,7 +61,6 @@ module.exports.updateDoctorAccountStatus = async (req, res) => {
             data: doctor,
         });
     } catch (error) {
-        console.log(error);
         res.status(500).send({
             message: "Error applying doctor account",
             success: false,

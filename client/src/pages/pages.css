@@ -33,6 +33,7 @@
     text-align: left !important;
     font-size: 18px !important;
     padding: 5px !important;
+    cursor: pointer;
 }
 
 .mark-text {
@@ -46,8 +47,8 @@
 
 .login-link {
     text-align: left !important;
-  }
-  
-  .login-link:hover {
+}
+
+.login-link:hover {
     color: rgba(128, 128, 128, 0.568) !important;
-  }
+}

@@ -54,7 +54,6 @@ module.exports.registerUser = async (req, res, next) => {
 module.exports.loginUser = async (req, res) => {
   try {
     const userData = req.body
-
     const user = await checkUserExistsService(userData.email)
     if (!user) {
       return res.status(200).send({
@@ -116,7 +115,7 @@ module.exports.getCurrentUserById = async (req, res) => {
 
 module.exports.applyDoctorAccount = async (req, res, next) => {
   try {
-    console.log('hitting here')
+
     const newDoctor = req.body
     const doctor = await createDoctorService(newDoctor)
     const adminUser = await getAdminService()
@@ -151,8 +150,7 @@ module.exports.applyDoctorAccount = async (req, res, next) => {
 module.exports.markAllAsSeen = async (req, res) => {
   try {
 
-    console.log("hitting mark all as read");
-    const userId = req.body.userId;
+    const userId = req.body.id;
     const updatedUser = await markAllAsSeenService(userId);
 
     res.status(200).send({
@@ -172,7 +170,7 @@ module.exports.markAllAsSeen = async (req, res) => {
 
 module.exports.deleteAllNotification = async (req, res) => {
   try {
-    console.log("delete hitting");
+
     const userId = req.body.userId;
     const updatedUser = await deleteAllNotificationService(userId);
     res.status(200).send({

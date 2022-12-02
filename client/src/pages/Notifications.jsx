@@ -15,7 +15,7 @@ const Notifications = () => {
     const markAllAsSeen = async () => {
         try {
             dispatch(showLoading())
-            const res = await axios.post('/api/v1/user/mark-all-as-seen', { userId: user?._id }, {
+            const res = await axios.post('/api/v1/user/mark-all-as-seen', { id: user?._id }, {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem("token")
                 }
@@ -56,17 +56,19 @@ const Notifications = () => {
     return (
         <Layout>
             <h1 className="page-title">Notifications</h1>
-
             <div className="p-3">
                 <Tabs defaultActiveKey="1">
                     <Tabs.TabPane tab="Unseen Notifications" key="1">
                         <div className="d-flex justify-content-between">
                             <div >
-                                {user?.unseenNotifications.map(notification => <p key={notification.type} className="notification-message">
+                                {user?.unseenNotifications.map(notification => <p
+
+                                    onClick={() => navigate(notification.onClickPath)}
+                                    key={notification.type} className="notification-message text-success card">
                                     {notification.message}
                                 </p>)}
                             </div>
-                            <h6 className="custom-link" onClick={() => markAllAsSeen()}>Mark All As Read</h6>
+                            <h6 className="custom-link text-danger" onClick={() => markAllAsSeen()}>Mark All As Read</h6>
 
                         </div>
                     </Tabs.TabPane>
@@ -74,11 +76,13 @@ const Notifications = () => {
                     <Tabs.TabPane tab="Seen Notifications" key="2">
                         <div className="d-flex justify-content-between">
                             <div >
-                                {user?.seenNotifications.map(notification => <p key={notification.type} className="notification-message">
+                                {user?.seenNotifications.map(notification => <p
+
+                                    key={notification.type} className="notification-message card" >
                                     {notification.message}
                                 </p>)}
                             </div>
-                            <h6 className='custom-link' onClick={() => deleteAllNotifications()}>Delete All</h6>
+                            <h6 className='custom-link text-danger' onClick={() => deleteAllNotifications()}>Delete All</h6>
                         </div>
 
                     </Tabs.TabPane>

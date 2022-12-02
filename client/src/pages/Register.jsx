@@ -21,7 +21,6 @@ const Register = () => {
             if (res.data.success) {
                 toast.success(res.data.message);
                 navigate('/login')
-                toast.success("Redirecting to login");
             }
             else if (!res.data.success) {
                 toast.error(res.data.message);

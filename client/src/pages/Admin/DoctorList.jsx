@@ -2,15 +2,16 @@ import { Table } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../Layout/Layout';
+import { hideLoading, showLoading } from '../../redux/alertReducer';
 
 const DoctorLIst = () => {
 
     const { user } = useSelector(state => state.user)
 
     const [doctors, setDoctors] = useState([]);
-
+    const dispatch = useDispatch()
 
     const getDoctors = async () => {
         try {
@@ -24,7 +25,7 @@ const DoctorLIst = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            toast.error("Something went wrong")
         }
     }
 
@@ -36,18 +37,23 @@ const DoctorLIst = () => {
     // updating doctors
     const updateDoctorAccount = async (doctorId, status) => {
         try {
+            dispatch(showLoading())
             const res = await axios.post('/api/v1/admin/update-doctor-account-status', { doctorId, status }, {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 }
             })
 
+
             if (res.data.success) {
+                dispatch(hideLoading())
                 toast.success(res.data.message)
                 getDoctors()
             }
 
         } catch (error) {
+            toast.error("Something went Wrong")
+            dispatch(hideLoading())
 
         }
     }
@@ -91,8 +97,8 @@ const DoctorLIst = () => {
             dataIndex: 'actions',
             render: (text, record) => (
                 <div>
-                    {record.status === 'pending' && <p className="custom-link" onClick={() => updateDoctorAccount(record._id, 'success')}>Approve</p>}
-                    {record.status === 'success' && <p className="custom-link text-danger" onClick={() => updateDoctorAccount(record._id, 'pending')}>Remove</p>}
+                    {record.status === 'pending' && <p className="custom-link" onClick={() => updateDoctorAccount(record._id, 'approved')}>Approve</p>}
+                    {record.status === 'approved' && <p className="custom-link text-danger" onClick={() => updateDoctorAccount(record._id, 'pending')}>Restrict Account</p>}
                 </div>
             )
         }

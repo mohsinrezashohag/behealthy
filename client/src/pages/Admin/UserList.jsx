@@ -14,13 +14,12 @@ const UserList = () => {
                 }
             })
 
-            console.log(res);
             if (res.data.success) {
                 setUsers(res.data.data)
             }
 
         } catch (error) {
-            console.log(error);
+            toast.error('Something went wrong')
         }
     }
 
