@@ -7,9 +7,13 @@ const {
   getAdminService,
   markAllAsSeenService,
   deleteAllNotificationService,
+  getAllApprovedDoctorsService,
 } = require('../services/user.service')
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generateToken')
+const { getAllDoctorsService } = require('../services/admin.service')
+const Doctors = require('../models/doctorModel')
+
 
 module.exports.registerUser = async (req, res, next) => {
   try {
@@ -182,6 +186,41 @@ module.exports.deleteAllNotification = async (req, res) => {
     res.status(400).send({
       success: false,
       message: "Failed to delete all notifications"
+    })
+  }
+}
+
+
+module.exports.getAllApprovedDoctors = async (req, res) => {
+  try {
+    const doctors = await getAllApprovedDoctorsService();
+    res.status(200).send({
+      message: "Doctors fetched successfully",
+      success: true,
+      data: doctors,
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Doctors Loaded failed",
+    })
+  }
+}
+
+
+module.exports.getDoctorAccountById = async (req, res) => {
+  try {
+    const doctor = await Doctors.findOne({ _id: req.body.DcId });
+    console.log(doctor);
+    res.status(200).send({
+      success: true,
+      message: 'Doctor Account Found',
+      data: doctor
+    })
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: 'Doctor Account Not Found'
     })
   }
 }

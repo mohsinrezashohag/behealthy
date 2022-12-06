@@ -12,7 +12,7 @@ module.exports.getDoctorAccountByUserId = async (req, res) => {
         })
     } catch (error) {
         res.status(400).send({
-            success: true,
+            success: false,
             message: 'Doctor Account Not Found'
         })
     }

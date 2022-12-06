@@ -13,4 +13,8 @@ router.route('/apply-doctor-account').post(authMiddleware, userControllers.apply
 router.route('/mark-all-as-seen').post(authMiddleware, userControllers.markAllAsSeen)
 router.route('/delete-all-notifications').post(authMiddleware, userControllers.deleteAllNotification)
 
+
+router.route('/get-all-approved-doctors').get(authMiddleware, userControllers.getAllApprovedDoctors)
+router.route('/get-doctor-details').post(authMiddleware, userControllers.getDoctorAccountById)
+
 module.exports = router

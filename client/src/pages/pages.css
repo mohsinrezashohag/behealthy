@@ -52,3 +52,7 @@
 .login-link:hover {
     color: rgba(128, 128, 128, 0.568) !important;
 }
+
+.doctor-div {
+    cursor: pointer;
+}

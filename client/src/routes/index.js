@@ -12,6 +12,7 @@ import Notifications from '../pages/Notifications'
 import UserList from '../pages/Admin/UserList';
 import DoctorList from '../pages/Admin/DoctorList';
 import Profile from '../pages/Doctor/Profile';
+import BookAppointments from '../pages/BookAppointments.jsx'
 
 
 const Index = () => {
@@ -46,6 +47,11 @@ const Index = () => {
 
                     <Route path={`/doctor/profile/:doctorId`} element={<PrivateRoutes><Profile></Profile></PrivateRoutes>} ></Route>
 
+
+
+                    <Route path='/doctor-appointment/:doctorId' element={<PrivateRoutes>
+                        <BookAppointments></BookAppointments>
+                    </PrivateRoutes>}></Route>
 
                     <Route path="/login" element={<PublicRoutes><Login></Login></PublicRoutes>}></Route>
                     <Route path="/register" element={<PublicRoutes><Register></Register></PublicRoutes>}></Route>

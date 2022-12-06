@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
     },
     {
       name: 'Appointments',
-      path: '/appointments',
+      path: '/doctor-appointment/:doctorId',
       icon: 'ri-file-list-line',
     },
     {

@@ -54,3 +54,8 @@ module.exports.deleteAllNotificationService = async (userId) => {
   const updatedUser = await Users.findByIdAndUpdate(userId, user);
   return updatedUser
 }
+
+module.exports.getAllApprovedDoctorsService = async () => {
+  const doctors = await Doctors.find({ status: 'approved' })
+  return doctors
+}
