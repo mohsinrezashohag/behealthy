@@ -12,8 +12,10 @@ const {
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generateToken')
 const { getAllDoctorsService } = require('../services/admin.service')
-const Doctors = require('../models/doctorModel')
 
+const Users = require('../models/userModel')
+const Doctors = require('../models/doctorModel')
+const Appointments = require('../models/appointmentModel')
 
 module.exports.registerUser = async (req, res, next) => {
   try {
@@ -210,7 +212,7 @@ module.exports.getAllApprovedDoctors = async (req, res) => {
 
 module.exports.getDoctorAccountById = async (req, res) => {
   try {
-    const doctor = await Doctors.findOne({ _id: req.body.DcId });
+    const doctor = await Doctors.findOne({ _id: req.body.doctorId });
     console.log(doctor);
     res.status(200).send({
       success: true,
@@ -221,6 +223,42 @@ module.exports.getDoctorAccountById = async (req, res) => {
     res.status(400).send({
       success: false,
       message: 'Doctor Account Not Found'
+    })
+  }
+}
+
+
+module.exports.bookAppointment = async (req, res) => {
+  try {
+    console.log("hitting here");
+    const appointment = req.body;
+    appointment.status = 'pending'
+    const newAppointment = await Appointments.create(appointment);
+
+
+
+    const user = await Users.findOne({ _id: newAppointment?.doctorInfo?.userId });
+
+    const unseenNotifications = user.unseenNotifications;
+    unseenNotifications.push({
+      type: `New appointment request from ${appointment?.userInfo.name}`,
+      message: "You have a new appointment request",
+      onClickPath: "/notifications"
+    })
+
+
+    const updateUser = await Users.findOneAndUpdate({ _id: newAppointment?.doctorInfo?.userId }, user)
+
+    res.status(200).send({
+      success: true,
+      message: 'Appointment Requested Successfully',
+      data: newAppointment,
+    })
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: 'Appointment Request Failed'
+
     })
   }
 }
