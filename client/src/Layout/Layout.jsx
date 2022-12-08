@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
     },
     {
       name: 'Appointments',
-      path: '/doctor-appointment/:doctorId',
+      path: '/appointments',
       icon: 'ri-file-list-line',
     },
     {
@@ -69,7 +69,7 @@ const Layout = ({ children }) => {
     },
     {
       name: 'Appointments',
-      path: '/appointments',
+      path: '/doctor/appointments',
       icon: 'ri-file-list-line',
     },
     {
@@ -143,11 +143,17 @@ const Layout = ({ children }) => {
             </div>
 
             <div className='d-flex align-items-center justify-content-center'>
-              <div className="me-3" onClick={() => navigate('/admin/notifications')}>
+
+              {user?.isDoctor && <div className="me-3" onClick={() => navigate('/doctor/notifications')}>
                 <Badge count={user?.unseenNotifications.length}>
                   <i className='ri-notification-line header-action-icon'></i>
                 </Badge>
-              </div>
+              </div>}
+              {user?.isAdmin && <div className="me-3" onClick={() => navigate('/admin/notifications')}>
+                <Badge count={user?.unseenNotifications.length}>
+                  <i className='ri-notification-line header-action-icon'></i>
+                </Badge>
+              </div>}
 
               <div className='d-flex align-items-center justify-content-center'>
                 <i className='ri-user-line header-action-icon'></i>

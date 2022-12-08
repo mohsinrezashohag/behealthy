@@ -16,6 +16,9 @@ const { getAllDoctorsService } = require('../services/admin.service')
 const Users = require('../models/userModel')
 const Doctors = require('../models/doctorModel')
 const Appointments = require('../models/appointmentModel')
+const moment = require('moment')
+
+
 
 module.exports.registerUser = async (req, res, next) => {
   try {
@@ -230,8 +233,9 @@ module.exports.getDoctorAccountById = async (req, res) => {
 
 module.exports.bookAppointment = async (req, res) => {
   try {
-    console.log("hitting here");
     const appointment = req.body;
+    appointment.date = moment(req.body.date, 'DD:MM:YYYY').toISOString()
+    appointment.time = moment(req.body.time, 'HH:mm').toISOString()
     appointment.status = 'pending'
     const newAppointment = await Appointments.create(appointment);
 
@@ -259,6 +263,65 @@ module.exports.bookAppointment = async (req, res) => {
       success: false,
       message: 'Appointment Request Failed'
 
+    })
+  }
+}
+
+
+module.exports.checkAvailability = async (req, res) => {
+  try {
+    console.log("hitting here in check availability");
+
+    const date = moment(req.body.date, 'DD:MM:YYYY').toISOString()
+    const fromTime = moment(req.body.time, 'HH:mm').subtract(1, 'hours').toISOString()
+    const toTime = moment(req.body.time, 'DD:MM:YYYY').add(1, 'hours')
+
+    const doctorId = req.body.doctorId;
+
+    const appointments = await Appointments.find({ date: date, doctorId: doctorId, time: { $gte: fromTime, $lte: toTime } })
+
+    console.log("Appointments :", appointments);
+
+    if (appointments.length > 0) {
+      res.status(200).send({
+        success: false,
+        message: 'Schedule Not Available'
+      })
+    }
+    else {
+      res.status(200).send({
+        success: true,
+        message: 'Schedule Available'
+      })
+    }
+
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: 'Internal Server error',
+
+    })
+  }
+}
+
+
+
+
+
+
+module.exports.getAppointmentsById = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const appointments = await Appointments.find({ userId: userId });
+    res.status(200).send({
+      message: "Appointments loaded successfully",
+      success: true,
+      data: appointments,
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Appointments Loaded failed",
     })
   }
 }

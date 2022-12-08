@@ -13,6 +13,8 @@ import UserList from '../pages/Admin/UserList';
 import DoctorList from '../pages/Admin/DoctorList';
 import Profile from '../pages/Doctor/Profile';
 import BookAppointments from '../pages/BookAppointments.jsx'
+import Appointments from '../pages/Appointments';
+import DoctorAppointments from '../pages/Doctor/DoctorAppointments';
 
 
 const Index = () => {
@@ -38,6 +40,9 @@ const Index = () => {
                     <Route path="/" element={<PrivateRoutes><Home></Home></PrivateRoutes>}></Route>
                     <Route path="/home" element={<PrivateRoutes><Home></Home></PrivateRoutes>} ></Route>
                     <Route path="/apply-doctor" element={<PrivateRoutes><ApplyDoctor></ApplyDoctor></PrivateRoutes>} ></Route>
+                    <Route path="/appointments" element={<PrivateRoutes><Appointments></Appointments></PrivateRoutes>} ></Route>
+
+
 
 
                     <Route path="/admin/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
@@ -47,11 +52,19 @@ const Index = () => {
 
                     <Route path={`/doctor/profile/:doctorId`} element={<PrivateRoutes><Profile></Profile></PrivateRoutes>} ></Route>
 
+                    <Route path="/doctor/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
+
 
 
                     <Route path='/doctor-appointment/:doctorId' element={<PrivateRoutes>
                         <BookAppointments></BookAppointments>
                     </PrivateRoutes>}></Route>
+
+                    <Route path='/doctor/appointments' element={<PrivateRoutes>
+                        <DoctorAppointments></DoctorAppointments>
+                    </PrivateRoutes>}></Route>
+
+
 
                     <Route path="/login" element={<PublicRoutes><Login></Login></PublicRoutes>}></Route>
                     <Route path="/register" element={<PublicRoutes><Register></Register></PublicRoutes>}></Route>

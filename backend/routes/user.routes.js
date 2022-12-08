@@ -17,5 +17,7 @@ router.route('/delete-all-notifications').post(authMiddleware, userControllers.d
 router.route('/get-all-approved-doctors').get(authMiddleware, userControllers.getAllApprovedDoctors)
 router.route('/get-doctor-details').post(authMiddleware, userControllers.getDoctorAccountById)
 router.route('/book-appointment').post(authMiddleware, userControllers.bookAppointment)
+router.route('/check-availability').post(authMiddleware, userControllers.checkAvailability)
+router.route('/get-appointments-by-id').get(authMiddleware, userControllers.getAppointmentsById)
 
 module.exports = router

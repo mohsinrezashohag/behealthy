@@ -10,4 +10,10 @@ router.route('/get-doctor-account-by-userId')
 router.route('/update-doctor-profile')
     .post(authMiddleware, doctorControllers.updateDoctorProfile)
 
+router.route('/get-appointments-by-doctor-id')
+    .get(authMiddleware, doctorControllers.getDoctorAppointments)
+
+router.route('/change-appointment-status')
+    .post(authMiddleware, doctorControllers.changeAppointmentStatus)
+
 module.exports = router

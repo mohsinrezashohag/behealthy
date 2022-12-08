@@ -1,4 +1,6 @@
 const Doctors = require('../models/doctorModel')
+const Appointments = require('../models/appointmentModel')
+const Users = require('../models/userModel')
 
 
 
@@ -34,6 +36,64 @@ module.exports.updateDoctorProfile = async (req, res) => {
         res.status(400).send({
             success: false,
             message: 'Doctor Account updated failed',
+        })
+    }
+}
+
+
+module.exports.getDoctorAppointments = async (req, res) => {
+    try {
+        const userId = req.body.userId;
+        const doctor = await Doctors.findOne({ userId: userId });
+        const appointments = await Appointments.find({ doctorId: doctor._id })
+        res.status(200).send({
+            success: true,
+            message: 'Appointments Loaded successfully',
+            data: appointments
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            message: 'Appointments Loaded failed',
+
+        })
+    }
+}
+
+module.exports.changeAppointmentStatus = async (req, res) => {
+    try {
+        console.log('Hitting here');
+        const appointmentId = req.body.appointmentId;
+        const status = req.body.status;
+        const appointment = await Appointments.findOneAndUpdate({ appointmentId: appointmentId }, { status: status });
+
+
+        console.log(appointment);
+
+        const user = await Users.findOne({ _id: appointment.userId });
+
+
+
+        const unseenNotifications = user.unseenNotifications;
+        unseenNotifications.push({
+            type: "appointment-status-changed",
+            message: `Your appointment status has been ${status}`,
+            onClickPath: "/appointments",
+        });
+
+        const updateUser = Users.findOneAndUpdate({ _id: appointment.userId }, user)
+
+        res.status(200).send({
+            success: true,
+            message: 'Appointments Updated successfully',
+        })
+
+
+
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            message: 'Appointments Updated failed',
         })
     }
 }
