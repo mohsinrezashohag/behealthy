@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose')
 
+
 const appointmentSchema = new mongoose.Schema({
     doctorId: {
         type: String,
@@ -9,10 +10,6 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-
-
-
-
     userInfo: {
         type: Object,
         required: true,

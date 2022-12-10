@@ -1,10 +1,9 @@
-const { getAllUsersService, getAllDoctorsService } = require("../services/admin.service");
 const Users = require('../models/userModel')
 const Doctors = require('../models/doctorModel')
 
 module.exports.getAllUsers = async (req, res, next) => {
     try {
-        const users = await getAllUsersService()
+        const users = await Users.find({})
         res.status(200).send({
             message: "Users fetched successfully",
             success: true,
@@ -20,7 +19,7 @@ module.exports.getAllUsers = async (req, res, next) => {
 
 module.exports.getAllDoctors = async (req, res) => {
     try {
-        const doctors = await getAllDoctorsService();
+        const doctors = await Doctors.find({})
         res.status(200).send({
             message: "Doctors fetched successfully",
             success: true,

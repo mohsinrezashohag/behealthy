@@ -25,13 +25,11 @@ module.exports.updateDoctorProfile = async (req, res) => {
     try {
 
         const updateDoctor = await Doctors.findOneAndUpdate({ userId: req.body.userId }, req.body)
-
         res.status(200).send({
             success: true,
             message: 'Doctor Account updated successfully',
             data: updateDoctor
         })
-
     } catch (error) {
         res.status(400).send({
             success: false,
@@ -39,7 +37,6 @@ module.exports.updateDoctorProfile = async (req, res) => {
         })
     }
 }
-
 
 module.exports.getDoctorAppointments = async (req, res) => {
     try {
@@ -62,17 +59,11 @@ module.exports.getDoctorAppointments = async (req, res) => {
 
 module.exports.changeAppointmentStatus = async (req, res) => {
     try {
-        console.log('Hitting here');
         const appointmentId = req.body.appointmentId;
         const status = req.body.status;
-        const appointment = await Appointments.findOneAndUpdate({ appointmentId: appointmentId }, { status: status });
+        const appointment = await Appointments.findOneAndUpdate({ _id: appointmentId }, { status: status });
 
-
-        console.log(appointment);
-
-        const user = await Users.findOne({ _id: appointment.userId });
-
-
+        const user = await Users.findOne({ _id: appointment?.userId });
 
         const unseenNotifications = user.unseenNotifications;
         unseenNotifications.push({
@@ -80,16 +71,11 @@ module.exports.changeAppointmentStatus = async (req, res) => {
             message: `Your appointment status has been ${status}`,
             onClickPath: "/appointments",
         });
-
-        const updateUser = Users.findOneAndUpdate({ _id: appointment.userId }, user)
-
+        const updateUser = await Users.findOneAndUpdate({ _id: appointment?.userId }, user)
         res.status(200).send({
             success: true,
             message: 'Appointments Updated successfully',
         })
-
-
-
     } catch (error) {
         res.status(400).send({
             success: false,

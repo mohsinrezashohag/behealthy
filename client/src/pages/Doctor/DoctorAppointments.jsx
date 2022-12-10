@@ -94,14 +94,21 @@ const DoctorAppointments = () => {
             dataIndex: 'actions',
             render: (text, record) => (
                 <div>
-                    {record.status === 'pending' ? <div className="d-flex">
+                    {record.status === 'pending' && <div className="d-flex">
 
                         <p className="custom-link me-2 fw-bold text-success" onClick={() => changeAppointmentStatus(record._id, 'approved')}>Approve</p>
                         <p className="custom-link text-danger fw-bold" onClick={() => changeAppointmentStatus(record._id, 'rejected')}>Reject</p>
 
-                    </div> : <p className=" text-danger fw-bold" >Rejected</p>}
+                    </div>}
 
-                </div>
+                    {record.status === 'approved' && <p className='text-success fw-bold'>Approved</p>}
+                    {record.status === 'rejected' && <p className='text-success fw-bold'>Rejected</p>}
+
+
+
+
+
+                </div >
             )
         }
     ];

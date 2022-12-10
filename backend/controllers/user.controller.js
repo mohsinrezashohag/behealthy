@@ -1,23 +1,9 @@
-const {
-  registerUserService,
-  getUserByIdService,
-  createDoctorService,
-  checkUserExistsService,
-  updateAdminService,
-  getAdminService,
-  markAllAsSeenService,
-  deleteAllNotificationService,
-  getAllApprovedDoctorsService,
-} = require('../services/user.service')
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../utils/generateToken')
-const { getAllDoctorsService } = require('../services/admin.service')
-
 const Users = require('../models/userModel')
 const Doctors = require('../models/doctorModel')
 const Appointments = require('../models/appointmentModel')
 const moment = require('moment')
-
 
 
 module.exports.registerUser = async (req, res, next) => {
@@ -38,7 +24,7 @@ module.exports.registerUser = async (req, res, next) => {
       })
     }
 
-    const userExists = await checkUserExistsService(newUser.email)
+    const userExists = await Users.findOne({ email: newUser.email })
     if (userExists) {
       return res.status(200).send({
         success: false,
@@ -46,7 +32,8 @@ module.exports.registerUser = async (req, res, next) => {
       })
     }
 
-    const user = await registerUserService(newUser)
+    const user = await Users.create(newUser)
+
     res.status(200).send({
       success: true,
       message: 'User registered successfully',
@@ -63,7 +50,7 @@ module.exports.registerUser = async (req, res, next) => {
 module.exports.loginUser = async (req, res) => {
   try {
     const userData = req.body
-    const user = await checkUserExistsService(userData.email)
+    const user = await Users.findOne({ email: userData.email })
     if (!user) {
       return res.status(200).send({
         success: false,
@@ -101,7 +88,9 @@ module.exports.loginUser = async (req, res) => {
 
 module.exports.getCurrentUserById = async (req, res) => {
   try {
-    const user = await getUserByIdService(req.body.userId)
+    const userId = req.body.userId;
+    const user = await Users.findOne({ _id: userId })
+
     if (!user) {
       return res.status(200).send({
         success: false,
@@ -126,11 +115,11 @@ module.exports.applyDoctorAccount = async (req, res, next) => {
   try {
 
     const newDoctor = req.body
-    const doctor = await createDoctorService(newDoctor)
-    const adminUser = await getAdminService()
+    const doctor = await Doctors.create(newDoctor)
+
+    const adminUser = await Users.findOne({ isAdmin: true })
 
     const unseenNotifications = adminUser.unseenNotifications
-
     unseenNotifications.push({
       type: 'Doctor Account Request',
       message: `${doctor?.firstName + ' ' + doctor?.lastName} has requested for Doctor Account`,
@@ -141,7 +130,8 @@ module.exports.applyDoctorAccount = async (req, res, next) => {
       onClickPath: '/admin/doctors',
     })
 
-    await updateAdminService(adminUser._id, { unseenNotifications })
+
+    const updateAdmin = await Users.findByIdAndUpdate(adminUser._id, { unseenNotifications })
 
     res.status(200).send({
       success: true,
@@ -160,7 +150,14 @@ module.exports.markAllAsSeen = async (req, res) => {
   try {
 
     const userId = req.body.id;
-    const updatedUser = await markAllAsSeenService(userId);
+    const user = await Users.findOne({ _id: userId })
+    const unseenNotifications = user.unseenNotifications;
+    const oldSeenNotifications = user.seenNotifications;
+    oldSeenNotifications.push(...unseenNotifications)
+    user.unseenNotifications = [],
+      user.seenNotifications = oldSeenNotifications;
+
+    const updatedUser = await Users.findByIdAndUpdate(userId, user)
 
     res.status(200).send({
       success: true,
@@ -181,7 +178,11 @@ module.exports.deleteAllNotification = async (req, res) => {
   try {
 
     const userId = req.body.userId;
-    const updatedUser = await deleteAllNotificationService(userId);
+
+    const user = await Users.findOne({ _id: userId })
+    user.seenNotifications = [];
+    const updatedUser = await Users.findByIdAndUpdate(userId, user);
+
     res.status(200).send({
       success: true,
       message: "Deleted All Notifications",
@@ -198,7 +199,7 @@ module.exports.deleteAllNotification = async (req, res) => {
 
 module.exports.getAllApprovedDoctors = async (req, res) => {
   try {
-    const doctors = await getAllApprovedDoctorsService();
+    const doctors = await Doctors.find({ status: 'approved' })
     res.status(200).send({
       message: "Doctors fetched successfully",
       success: true,
@@ -213,10 +214,13 @@ module.exports.getAllApprovedDoctors = async (req, res) => {
 }
 
 
+
+
+
+
 module.exports.getDoctorAccountById = async (req, res) => {
   try {
     const doctor = await Doctors.findOne({ _id: req.body.doctorId });
-    console.log(doctor);
     res.status(200).send({
       success: true,
       message: 'Doctor Account Found',
@@ -247,7 +251,7 @@ module.exports.bookAppointment = async (req, res) => {
     unseenNotifications.push({
       type: `New appointment request from ${appointment?.userInfo.name}`,
       message: "You have a new appointment request",
-      onClickPath: "/notifications"
+      onClickPath: "/doctor/appointments"
     })
 
 
@@ -270,7 +274,6 @@ module.exports.bookAppointment = async (req, res) => {
 
 module.exports.checkAvailability = async (req, res) => {
   try {
-    console.log("hitting here in check availability");
 
     const date = moment(req.body.date, 'DD:MM:YYYY').toISOString()
     const fromTime = moment(req.body.time, 'HH:mm').subtract(1, 'hours').toISOString()
@@ -279,8 +282,6 @@ module.exports.checkAvailability = async (req, res) => {
     const doctorId = req.body.doctorId;
 
     const appointments = await Appointments.find({ date: date, doctorId: doctorId, time: { $gte: fromTime, $lte: toTime } })
-
-    console.log("Appointments :", appointments);
 
     if (appointments.length > 0) {
       res.status(200).send({

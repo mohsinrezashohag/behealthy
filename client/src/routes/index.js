@@ -42,17 +42,20 @@ const Index = () => {
                     <Route path="/apply-doctor" element={<PrivateRoutes><ApplyDoctor></ApplyDoctor></PrivateRoutes>} ></Route>
                     <Route path="/appointments" element={<PrivateRoutes><Appointments></Appointments></PrivateRoutes>} ></Route>
 
+                    <Route path="/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
 
 
 
-                    <Route path="/admin/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
+                    {/* 
+                    <Route path="/admin/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route> */}
+
                     <Route path="/admin/users" element={<PrivateRoutes><UserList></UserList></PrivateRoutes>} ></Route>
                     <Route path="/admin/doctors" element={<PrivateRoutes><DoctorList></DoctorList></PrivateRoutes>} ></Route>
 
 
                     <Route path={`/doctor/profile/:doctorId`} element={<PrivateRoutes><Profile></Profile></PrivateRoutes>} ></Route>
 
-                    <Route path="/doctor/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route>
+                    {/* <Route path="/doctor/notifications" element={<PrivateRoutes><Notifications></Notifications></PrivateRoutes>} ></Route> */}
 
 
 

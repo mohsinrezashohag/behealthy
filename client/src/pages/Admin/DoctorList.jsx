@@ -97,8 +97,8 @@ const DoctorLIst = () => {
             dataIndex: 'actions',
             render: (text, record) => (
                 <div>
-                    {record.status === 'pending' && <p className="custom-link" onClick={() => updateDoctorAccount(record._id, 'approved')}>Approve</p>}
-                    {record.status === 'approved' && <p className="custom-link text-danger" onClick={() => updateDoctorAccount(record._id, 'pending')}>Restrict Account</p>}
+                    {record.status === 'pending' && <p className="custom-link fw-bold" onClick={() => updateDoctorAccount(record._id, 'approved')}>Approve</p>}
+                    {record.status === 'approved' && <p className="custom-link text-danger fw-bold" onClick={() => updateDoctorAccount(record._id, 'pending')}>Restrict Account</p>}
                 </div>
             )
         }

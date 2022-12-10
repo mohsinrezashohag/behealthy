@@ -16,27 +16,10 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
-      // validate: {
-      //     validator: (value) => {
-      //         validator.isStrongPassword(value, {
-      //             minLength: 8,
-      //             minLowercase: 1,
-      //             minUppercase: 1,
-      //             minNumbers: 1
-      //         })
-      //     },
-      //     messages: 'password  is not strong enough'
-      // }
     },
     confirmPassword: {
       type: String,
       required: true,
-      // validate: {
-      //     validator: function (value) {
-      //         return value = this.password
-      //     },
-      //     messages: 'password is not matched'
-      // }
     },
     isDoctor: {
       type: Boolean,

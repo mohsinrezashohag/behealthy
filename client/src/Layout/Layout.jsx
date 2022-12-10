@@ -30,11 +30,7 @@ const Layout = ({ children }) => {
       path: '/apply-doctor',
       icon: 'ri-hospital-line',
     },
-    {
-      name: 'Profile',
-      path: '/profile',
-      icon: 'ri-user-line',
-    },
+
   ]
 
   const adminMenu = [
@@ -52,12 +48,7 @@ const Layout = ({ children }) => {
       name: 'Doctors',
       path: '/admin/doctors',
       icon: 'ri-hospital-line',
-    },
-    {
-      name: 'Profile',
-      path: '/profile',
-      icon: 'ri-user-line',
-    },
+    }
   ]
 
 
@@ -144,16 +135,13 @@ const Layout = ({ children }) => {
 
             <div className='d-flex align-items-center justify-content-center'>
 
-              {user?.isDoctor && <div className="me-3" onClick={() => navigate('/doctor/notifications')}>
+              {user && <div className="me-3 custom-link" onClick={() => navigate('/notifications')}>
                 <Badge count={user?.unseenNotifications.length}>
                   <i className='ri-notification-line header-action-icon'></i>
                 </Badge>
               </div>}
-              {user?.isAdmin && <div className="me-3" onClick={() => navigate('/admin/notifications')}>
-                <Badge count={user?.unseenNotifications.length}>
-                  <i className='ri-notification-line header-action-icon'></i>
-                </Badge>
-              </div>}
+
+
 
               <div className='d-flex align-items-center justify-content-center'>
                 <i className='ri-user-line header-action-icon'></i>
